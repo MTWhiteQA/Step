@@ -1,0 +1,821 @@
+{
+	"info": {
+		"_postman_id": "f0c9ef1a-aff2-464a-98af-53c796d9413b",
+		"name": "Stepik",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28036198",
+		"_collection_link": "https://winter-escape-73936.postman.co/workspace/BusyProject~4458a5fd-09cb-4e55-a799-4b2d15b750c0/collection/28036198-f0c9ef1a-aff2-464a-98af-53c796d9413b?action=share&creator=28036198&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Stepik.org",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "819786a2-620a-48fc-af6d-d33c01b14eec",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "stepik.org",
+							"host": [
+								"stepik",
+								"org"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Headers is valid\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.response.to.have.header(\"x-do-orig-status\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"first_name\": \"Richard\",\r\n  \"last_name\": \"Gere\",\r\n  \"company_id\": 2\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Issues",
+			"item": []
+		},
+		{
+			"name": "Companies",
+			"item": [
+				{
+					"name": "CompaniesEnableSSL",
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://send-request.me/api/companies/",
+							"protocol": "http",
+							"host": [
+								"send-request",
+								"me"
+							],
+							"path": [
+								"api",
+								"companies",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CompaniesDefaultRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Headers is valid\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Connection\")).to.eql(\"keep-alive\");\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/companies/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CompaniesWithLimitOffset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let DataJson = pm.response.json().data;\r",
+									"\r",
+									"console.log(DataJson)\r",
+									"\r",
+									"pm.test(\"Len of JSON with default limit\", function () {\r",
+									"    let countLenData = Object.keys(DataJson).length\r",
+									"    pm.expect(countLenData).to.eql(5);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/companies/?limit=5&offset=2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								""
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "offset",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authorization",
+			"item": [
+				{
+					"name": "info about user",
+					"item": [
+						{
+							"name": "valid login&password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response time is less than 2000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"gmt\",\r\n    \"password\": \"qwerty12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/authorize",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"authorize"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "valid login wrong password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"  pm.response.to.have.status(\"Forbidden\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"gmt\",\r\n    \"password\": \"gwerty12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/authorize",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"authorize"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "valid login7&password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Request by https', function() {\r",
+											"    pm.expect(pm.request.url.protocol).to.eql('https')\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"gmt7711\",\r\n    \"password\": \"qwerty12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/authorize",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"authorize"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalid login1&password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"  pm.response.to.have.status(\"Unprocessable Entity\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"g\",\r\n    \"password\": \"qwerty12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/authorize",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"authorize"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalid login2&password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"  pm.response.to.have.status(\"Unprocessable Entity\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"gm\",\r\n    \"password\": \"qwerty12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/authorize",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"authorize"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "empty login valid password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Header is valid', function(){\r",
+											"    pm.expect(pm.response.headers.get('cache-control')).to.eql('private');\r",
+											"});\r",
+											"\r",
+											"pm.test('Headers is content Server', function() {\r",
+											"    pm.expect(pm.response.headers.get('Server')).to.eql('cloudflare');\r",
+											"});\r",
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"  pm.response.to.have.status(\"Unprocessable Entity\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \" \",\r\n    \"password\": \"qwerty12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/authorize",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"authorize"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "valid login empty password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"pm.test(\"Content-Type header is application/json\", () => {\r",
+											"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"gmt\",\r\n    \"password\": \" \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/authorize",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"authorize"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "without login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": \"qwerty12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/authorize",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"authorize"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "without password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json\", () => {\r",
+											"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"gmt\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/authorize",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"authorize"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create token",
+					"item": [
+						{
+							"name": "Get data without token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response property matches environment variable\", function () {\r",
+											"  pm.expect(pm.response.json().name).to.eql(pm.environment.get(\"StepikCourse\"));\r",
+											"});\r",
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get data with invalid token",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "d4dfbf80c5bfc1e45aac2b6acaba525d",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "x-token",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Getting an expired token",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "d4dfbf80c5bfc1e45aac2b6acaba525d",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "x-token",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "timeout",
+										"value": "3",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get data with valid token header",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is present\", () => {\r",
+											"  pm.response.to.have.header(\"Content-Type\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "d4dfbf80c5bfc1e45aac2b6acaba523d",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "x-token",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"me"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
